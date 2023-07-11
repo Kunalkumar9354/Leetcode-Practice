@@ -51,10 +51,9 @@ select * from patient_logs;
 	--     3				2					1
 -- answer
 
-select * from (select *, rank() over(order by patient_count desc, account_id asc) rn from (select account_id, month, count(patient_id)as patient_count from (select account_id ,monthname(date)as month,patient_id from 
+select month,account_id,patient_count from (select *, rank() over(order by patient_count desc, account_id asc) rn from (select account_id, month, count(patient_id)as patient_count from (select account_id ,monthname(date)as month,patient_id from 
 patient_logs
 group by account_id,patient_id , month) t
 group by account_id, month) t)p
 where rn < 3
 order by patient_count desc
-
