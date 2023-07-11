@@ -46,7 +46,7 @@ select * from patient_logs;
 
 -- logic
 -- acoount_id    no_of_patients 	no_ofunique_patients
-	-- 		1				3					3
+	-- 	1				3					3
 	--     2				4					3
 	--     3				2					1
 -- answer
