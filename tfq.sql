@@ -51,9 +51,10 @@ select * from patient_logs;
 	--     3				2					1
 -- answer
 
-select month,account_id,patient_count from (select *, rank() over(order by patient_count desc, account_id asc) rn from (select account_id, month, count(patient_id)as patient_count from (select account_id ,monthname(date)as month,patient_id from 
-patient_logs
-group by account_id,patient_id , month) t
-group by account_id, month) t)p
-where rn < 3
-order by patient_count desc
+with mycte as (select month , account_id , n_o_p , rank() over(partition by month  order by n_o_p desc,account_id asc) rn 
+from (select  monthname(date) as month , account_id, count(distinct patient_id) as n_o_p
+from patient_logs
+group by month, account_id 
+order by n_o_p desc)t
+order by n_o_p desc )
+select month, account_id,n_o_p from mycte  where rn <3;
