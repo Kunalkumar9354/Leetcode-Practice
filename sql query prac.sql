@@ -105,5 +105,16 @@ select * from employee ;
 select * from employeedetail;
 select distinct year(doj) as joined_year,count(empid) as employee_joined from employeedetail
 group by year(doj);
+-- BONUS: Query to pivot the data in the Employee table and retrieve the total
+-- salary for each city.
+-- The result should display the EmpID, EmpName, and separate columns for each city
+-- (Mathura, Pune, Delhi), containing the corresponding total salary.
 
+select empid,empname,
+			sum(case when city="mathura"then salary else(0) end ) as "Mathura",
+            sum(case when city="Pune" then salary else (0) end) as "Pune",
+            sum(case when city="Banglore" then salary else (0) end) as "Banglore",
+            sum(case when city="Delhi" then salary else (0) end) as "Delhi"
+from employee 
+group by empid,empname 
 
